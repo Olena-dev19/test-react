@@ -1,5 +1,7 @@
 // src/components/App.tsx
 
+import OrderForm from './OrderForm';
+
 // import axios from 'axios';
 // import { useEffect, useState } from 'react';
 // import Timer from './Timer';
@@ -25,21 +27,23 @@
 //   title: string;
 //   url: string;
 // }
-import { useState } from 'react';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { fetchArticles } from './FetchArticles';
-import ReactPaginate from 'react-paginate';
-import SearchForm2 from './SearchForm2';
+// import { useState } from 'react';
+// import { keepPreviousData, useQuery } from '@tanstack/react-query';
+// import { fetchArticles } from './FetchArticles';
+// import ReactPaginate from 'react-paginate';
+// import SearchForm2 from './SearchForm2';
 
-import css from './App.module.css';
-import ArticleList2 from './ArticleList2';
+// import css from './App.module.css';
+// import ArticleList2 from './ArticleList2';
 // import axios from 'axios';
 
 // const fetchCharacter = async (id: string) => {
 //   const response = await axios.get(`https://swapi.info/api/people/${id}`);
 //   return response.data;
 // };
-
+export default function App() {
+  return <OrderForm />;
+}
 // export default function App() {
 //   const [characterId, setCharacterId] = useState('');
 
@@ -66,47 +70,47 @@ import ArticleList2 from './ArticleList2';
 //     </>
 //   );
 // }
-export default function App() {
-  const [topic, setTopic] = useState('');
+// export default function App() {
+//   const [topic, setTopic] = useState('');
 
-  const [currentPage, setCurrentPage] = useState(1);
+//   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, isLoading, isError, isSuccess } = useQuery({
-    queryKey: ['articles', topic, currentPage],
-    queryFn: () => fetchArticles(topic, currentPage),
-    enabled: topic !== '',
-    placeholderData: keepPreviousData,
-  });
+//   const { data, isLoading, isError, isSuccess } = useQuery({
+//     queryKey: ['articles', topic, currentPage],
+//     queryFn: () => fetchArticles(topic, currentPage),
+//     enabled: topic !== '',
+//     placeholderData: keepPreviousData,
+//   });
 
-  const totalPages = data?.nbPages ?? 0;
+//   const totalPages = data?.nbPages ?? 0;
 
-  const handleSearch = async (newTopic: string) => {
-    setTopic(newTopic);
-    setCurrentPage(1);
-  };
+//   const handleSearch = async (newTopic: string) => {
+//     setTopic(newTopic);
+//     setCurrentPage(1);
+//   };
 
-  return (
-    <>
-      <SearchForm2 onSubmit={handleSearch} />
-      {isSuccess && totalPages > 1 && (
-        <ReactPaginate
-          pageCount={totalPages}
-          pageRangeDisplayed={5}
-          marginPagesDisplayed={1}
-          onPageChange={({ selected }) => setCurrentPage(selected + 1)}
-          forcePage={currentPage - 1}
-          containerClassName={css.pagination}
-          activeClassName={css.active}
-          nextLabel="→"
-          previousLabel="←"
-        />
-      )}
-      {isLoading && <p>Loading data, please wait...</p>}
-      {isError && <p>Whoops, something went wrong! Please try again!</p>}
-      {data && data.hits.length > 0 && <ArticleList2 items={data.hits} />}
-    </>
-  );
-}
+//   return (
+//     <>
+//       <SearchForm2 onSubmit={handleSearch} />
+//       {isSuccess && totalPages > 1 && (
+//         <ReactPaginate
+//           pageCount={totalPages}
+//           pageRangeDisplayed={5}
+//           marginPagesDisplayed={1}
+//           onPageChange={({ selected }) => setCurrentPage(selected + 1)}
+//           forcePage={currentPage - 1}
+//           containerClassName={css.pagination}
+//           activeClassName={css.active}
+//           nextLabel="→"
+//           previousLabel="←"
+//         />
+//       )}
+//       {isLoading && <p>Loading data, please wait...</p>}
+//       {isError && <p>Whoops, something went wrong! Please try again!</p>}
+//       {data && data.hits.length > 0 && <ArticleList2 items={data.hits} />}
+//     </>
+//   );
+// }
 // export default function App() {
 //   // const [values, setValues] = useState<Values>({ x: 0, y: 0 });
 //   const [articles, setArticles] = useState<Article[]>([]);
